@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<android.support.v7.widget.GridView-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:id="@+id/list"-->
+    <!--android:name="com.example.herui.playappstore.FindFragment"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginLeft="16dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--android:gravity="center"-->
+    <!--android:columnWidth="100dp"-->
+    <!--android:verticalSpacing="24dp"-->
+    <!--android:horizontalSpacing="10dp"-->
+    <!--android:stretchMode="spacingWidthUniform"-->
+    <!--tools:context="com.example.herui.playappstore.FindFragment"-->
+    <!--tools:listitem="@layout/fragment_appgriditem" />-->
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.playappstore.playappstore.FindFragment">
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:columnWidth="100dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="24dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="spacingWidthUniform"
+        />
+
+</LinearLayout>

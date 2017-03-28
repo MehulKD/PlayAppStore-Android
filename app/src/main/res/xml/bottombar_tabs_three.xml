@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_find"
+        icon="@drawable/ic_access_time_white_24dp"
+        title="Find" />
+
+    <tab
+        id="@+id/tab_favorites"
+        icon="@drawable/ic_favorite_white_24dp"
+        title="Favorites" />
+    <tab
+        id="@+id/tab_setting"
+        icon="@drawable/ic_audiotrack_white_24dp"
+        title="Setting" />
+</tabs>
