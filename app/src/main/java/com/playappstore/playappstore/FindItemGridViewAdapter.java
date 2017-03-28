@@ -32,38 +32,7 @@ public class FindItemGridViewAdapter extends BaseAdapter {
         mValues = items;
         mListener = listener;
     }
-
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_find_list, parent, false);
-        return new ViewHolder(view);
-    }
-
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.nameTextView.setText("What is Success");
-        holder.authorTextView.setText("Harry ha");
-        //holder.coverImageView.setImageResource();
-        //holder.coverImageView.setImageURI(imageUrl);
-        Context context = holder.mView.getContext();
-
-        Glide.with(context).load("https://www.smashingmagazine.com/wp-content/uploads/2015/06/10-dithering-opt.jpg").into(holder.coverImageView);
-
-
-
-
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
-    }
-
+    
     @Override
     public int getCount () {
         return mValues.size();
