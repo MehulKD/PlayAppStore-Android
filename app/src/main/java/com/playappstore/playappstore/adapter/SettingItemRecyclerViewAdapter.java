@@ -1,13 +1,14 @@
-package com.playappstore.playappstore;
+package com.playappstore.playappstore.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.playappstore.playappstore.content.DummyContent.DummyItem;
+import com.playappstore.playappstore.R;
+import com.playappstore.playappstore.view.Fragment.SettingFragment.OnListFragmentInteractionListener;
 
-import com.playappstore.playappstore.DummyContent.DummyItem;
-import com.playappstore.playappstore.FavouriteFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
 
@@ -16,12 +17,12 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class FavouriteItemRecyclerViewAdapter extends RecyclerView.Adapter<FavouriteItemRecyclerViewAdapter.ViewHolder> {
+public class SettingItemRecyclerViewAdapter extends RecyclerView.Adapter<SettingItemRecyclerViewAdapter.ViewHolder> {
 
     private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public FavouriteItemRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public SettingItemRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -29,14 +30,14 @@ public class FavouriteItemRecyclerViewAdapter extends RecyclerView.Adapter<Favou
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_favorite_item, parent, false);
+                .inflate(R.layout.fragment_setting_list, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
+//        holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

@@ -1,8 +1,6 @@
-package com.playappstore.playappstore;
+package com.playappstore.playappstore.adapter;
 
 import android.content.Context;
-import android.media.Image;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.playappstore.playappstore.DummyContent.DummyItem;
-import com.playappstore.playappstore.FindFragment.OnListFragmentInteractionListener;
+import com.playappstore.playappstore.content.DummyContent.DummyItem;
+import com.playappstore.playappstore.view.Fragment.FindFragment.OnListFragmentInteractionListener;
+import com.playappstore.playappstore.R;
+import com.playappstore.playappstore.view.SmoothCheckBox;
 
-import java.net.URI;
 import java.util.List;
 
 /**
@@ -32,7 +31,7 @@ public class FindItemGridViewAdapter extends BaseAdapter {
         mValues = items;
         mListener = listener;
     }
-    
+
     @Override
     public int getCount () {
         return mValues.size();
@@ -49,8 +48,6 @@ public class FindItemGridViewAdapter extends BaseAdapter {
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-
         // view holder pattern
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext())
@@ -83,7 +80,7 @@ public class FindItemGridViewAdapter extends BaseAdapter {
         private final TextView nameTextView;
         private final TextView authorTextView;
         private final ImageView coverImageView;
-        private final  SmoothCheckBox checkBox;
+        private final SmoothCheckBox checkBox;
         private DummyItem mItem;
 
         public ViewHolder(View view) {

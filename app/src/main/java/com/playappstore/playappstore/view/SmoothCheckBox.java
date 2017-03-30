@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.playappstore.playappstore;
+package com.playappstore.playappstore.view;
 
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
@@ -32,6 +32,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Checkable;
+
+import com.playappstore.playappstore.R;
+import com.playappstore.playappstore.utils.CompatUtils;
 
 /**
  * Author : andy

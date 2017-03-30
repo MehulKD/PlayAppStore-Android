@@ -1,13 +1,14 @@
-package com.playappstore.playappstore;
+package com.playappstore.playappstore.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.playappstore.playappstore.DummyContent.DummyItem;
-import com.playappstore.playappstore.SettingFragment.OnListFragmentInteractionListener;
 
+import com.playappstore.playappstore.content.DummyContent.DummyItem;
+import com.playappstore.playappstore.view.Fragment.FavouriteFragment.OnListFragmentInteractionListener;
+import com.playappstore.playappstore.R;
 
 import java.util.List;
 
@@ -16,12 +17,12 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class SettingItemRecyclerViewAdapter extends RecyclerView.Adapter<SettingItemRecyclerViewAdapter.ViewHolder> {
+public class FavouriteItemRecyclerViewAdapter extends RecyclerView.Adapter<FavouriteItemRecyclerViewAdapter.ViewHolder> {
 
     private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public SettingItemRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public FavouriteItemRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -29,8 +30,9 @@ public class SettingItemRecyclerViewAdapter extends RecyclerView.Adapter<Setting
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_setting_item, parent, false);
-        return new ViewHolder(view);
+                .inflate(R.layout.fragment_favorite_item, parent, false);
+        ViewHolder vh = new ViewHolder(view);
+        return vh;
     }
 
     @Override
@@ -57,9 +59,9 @@ public class SettingItemRecyclerViewAdapter extends RecyclerView.Adapter<Setting
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public View mView;
+        public TextView mIdView;
+        public TextView mContentView;
         public DummyItem mItem;
 
         public ViewHolder(View view) {

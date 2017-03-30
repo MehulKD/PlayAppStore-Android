@@ -24,8 +24,7 @@
             <!--android:src="@drawable/ic_favorite_white_24dp"-->
             <!--android:layout_gravity="bottom|right"-->
         <!--/>-->
-        <com.playappstore.playappstore.SmoothCheckBox
-
+        <com.playappstore.playappstore.view.SmoothCheckBox
             android:id="@+id/checkbox_favorite"
             android:layout_width="30dp"
             android:layout_height="30dp"

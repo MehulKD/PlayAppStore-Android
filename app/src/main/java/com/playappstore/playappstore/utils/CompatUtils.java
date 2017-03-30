@@ -1,4 +1,4 @@
-package com.playappstore.playappstore;
+package com.playappstore.playappstore.utils;
 
 import android.content.Context;
 

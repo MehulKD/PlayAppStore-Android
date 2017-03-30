@@ -1,4 +1,4 @@
-package com.playappstore.playappstore;
+package com.playappstore.playappstore.view.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-import java.util.List;
+import com.playappstore.playappstore.content.DummyContent;
+import com.playappstore.playappstore.content.DummyContent.DummyItem;
+import com.playappstore.playappstore.R;
+import com.playappstore.playappstore.adapter.FavouriteItemRecyclerViewAdapter;
 
 /**
  * A fragment representing a list of Items.
@@ -19,7 +21,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class SettingFragment extends Fragment {
+public class FavouriteFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -31,13 +33,13 @@ public class SettingFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-//    public SettingFragment() {
+//    public FavouriteFragment() {
 //    }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static SettingFragment newInstance() {
-        SettingFragment fragment = new SettingFragment();
+    public static FavouriteFragment newInstance() {
+        FavouriteFragment fragment = new FavouriteFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, 1);
         fragment.setArguments(args);
@@ -56,9 +58,7 @@ public class SettingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_setting_list, container, false);
-
-        // Set the adapter
+        View view = inflater.inflate(R.layout.fragment_favorite_list, container, false);
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
@@ -67,7 +67,7 @@ public class SettingFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new SettingItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new FavouriteItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
         return view;
     }
@@ -102,6 +102,6 @@ public class SettingFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyContent.DummyItem item);
+        void onListFragmentInteraction(DummyItem item);
     }
 }

@@ -1,4 +1,4 @@
-package com.playappstore.playappstore;
+package com.playappstore.playappstore.content;
 
 
 import java.util.ArrayList;

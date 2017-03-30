@@ -1,4 +1,4 @@
-package com.playappstore.playappstore;
+package com.playappstore.playappstore.view;
 
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -7,6 +7,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.playappstore.playappstore.R;
+import com.playappstore.playappstore.view.Fragment.FavouriteFragment;
+import com.playappstore.playappstore.view.Fragment.FindFragment;
+import com.playappstore.playappstore.view.Fragment.SettingFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
