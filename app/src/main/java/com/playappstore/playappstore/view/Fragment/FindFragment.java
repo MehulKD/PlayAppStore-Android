@@ -69,11 +69,11 @@ public class FindFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_find_list, container, false);
         ImageView iv = (ImageView) view.findViewById(R.id.iv);
-        String url = "https://45.77.13.248:1337/cgi/files/playappstore/a0ab29fe812a0582b6dd355e8dcaac66_icon.png";
-        Glide.with(this)
-                .load(url)
-                .asBitmap()
-                .into(iv);
+//        String url = "https://45.77.13.248:1337/cgi/files/playappstore/a0ab29fe812a0582b6dd355e8dcaac66_icon.png";
+//        Glide.with(this)
+//                .load(url)
+//                .asBitmap()
+//                .into(iv);
         GridView gridView = (GridView)view.findViewById(R.id.gridview);
         gridView.setAdapter(new FindItemGridViewAdapter(DummyContent.ITEMS, mListener));
         // Set the adapter
