@@ -7,20 +7,15 @@
     tools:context="com.playappstore.playappstore.view.Fragment.FindFragment">
 
     <GridView
-        android:visibility="gone"
+        android:layout_marginTop="10dp"
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:columnWidth="100dp"
         android:numColumns="auto_fit"
         android:verticalSpacing="24dp"
         android:horizontalSpacing="10dp"
         android:stretchMode="spacingWidthUniform"
         />
-    <ImageView
-        android:id="@+id/iv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </LinearLayout>

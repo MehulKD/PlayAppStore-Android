@@ -1,7 +1,5 @@
 package com.playappstore.playappstore.view.Fragment;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,18 +8,19 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.playappstore.playappstore.content.DummyContent;
 import com.playappstore.playappstore.content.DummyContent.DummyItem;
 
 import com.playappstore.playappstore.R;
 import com.playappstore.playappstore.adapter.FindItemGridViewAdapter;
+import com.playappstore.playappstore.entity.FindBean;
+import com.playappstore.playappstore.network.RetrofitInit;
+import com.playappstore.playappstore.utils.APIService;
 
-import org.json.JSONObject;
+import java.util.ArrayList;
 
-import okhttp3.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A fragment representing a list of Items.
@@ -36,6 +35,8 @@ public class FindFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 2;
     private OnListFragmentInteractionListener mListener;
+    private GridView gridView;
+    private FindItemGridViewAdapter adpter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -59,39 +60,35 @@ public class FindFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
-        String url = "https://45.77.13.248:1337/apps/ios";
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_find_list, container, false);
-        ImageView iv = (ImageView) view.findViewById(R.id.iv);
-//        String url = "https://45.77.13.248:1337/cgi/files/playappstore/a0ab29fe812a0582b6dd355e8dcaac66_icon.png";
-//        Glide.with(this)
-//                .load(url)
-//                .asBitmap()
-//                .into(iv);
-        GridView gridView = (GridView)view.findViewById(R.id.gridview);
-        gridView.setAdapter(new FindItemGridViewAdapter(DummyContent.ITEMS, mListener));
-        // Set the adapter
 
+        gridView = (GridView)view.findViewById(R.id.gridview);
+        adpter = new FindItemGridViewAdapter(new ArrayList<FindBean>(), mListener);
+        gridView.setAdapter(adpter);
+
+
+        APIService gitHubService = RetrofitInit.getInstance();
+        retrofit2.Call<ArrayList<FindBean>> list = gitHubService.getFindList();
+        list.enqueue(new Callback<ArrayList<FindBean>>() {
+            @Override
+            public void onResponse(retrofit2.Call<ArrayList<FindBean>> call, Response<ArrayList<FindBean>> response) {
+                adpter.setData(response.body());
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<ArrayList<FindBean>> call, Throwable t) {
+
+            }
+        });
         return view;
     }
 
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-//        if (context instanceof OnListFragmentInteractionListener) {
-//            mListener = (OnListFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnListFragmentInteractionListener");
-//        }
-    }
 
     @Override
     public void onDetach() {

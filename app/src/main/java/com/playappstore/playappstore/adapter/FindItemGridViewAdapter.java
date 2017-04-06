@@ -11,10 +11,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.playappstore.playappstore.content.DummyContent.DummyItem;
+import com.playappstore.playappstore.entity.FindBean;
 import com.playappstore.playappstore.view.Fragment.FindFragment.OnListFragmentInteractionListener;
 import com.playappstore.playappstore.R;
 import com.playappstore.playappstore.view.SmoothCheckBox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,10 +26,10 @@ import java.util.List;
  */
 public class FindItemGridViewAdapter extends BaseAdapter {
 
-    private final List<DummyItem> mValues;
+    private final ArrayList<FindBean> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public FindItemGridViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public FindItemGridViewAdapter(ArrayList<FindBean> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -59,26 +61,23 @@ public class FindItemGridViewAdapter extends BaseAdapter {
 
         final ViewHolder holder = (ViewHolder)convertView.getTag();
 
-        holder.nameTextView.setText("What is Success");
-        holder.authorTextView.setText("Harry y");
-        //holder.coverImageView.setImageResource();
-        //holder.coverImageView.setImageURI(imageUrl);
+        holder.nameTextView.setText(mValues.get(position).getName());
         Context context = holder.mView.getContext();
-        String url = "https://www.smashingmagazine.com/wp-content/uploads/2015/06/10-dithering-opt.jpg";
+
         //String url = "https://45.77.13.248:1337/cgi/files/playappstore/a0ab29fe812a0582b6dd355e8dcaac66_icon.png";
-        Glide.with(context).load(url).into(holder.coverImageView);
-
-
+        Glide.with(context).load(mValues.get(position).getIcon()).into(holder.coverImageView);
         return convertView;
     }
-    public int getItemCount() {
-        return mValues.size();
+
+    public void setData(ArrayList<FindBean> body) {
+        mValues.clear();
+        mValues.addAll(body);
+        notifyDataSetChanged();
     }
 
     private class ViewHolder  {
         private final View mView;
         private final TextView nameTextView;
-        private final TextView authorTextView;
         private final ImageView coverImageView;
         private final SmoothCheckBox checkBox;
         private DummyItem mItem;
@@ -86,7 +85,6 @@ public class FindItemGridViewAdapter extends BaseAdapter {
         public ViewHolder(View view) {
             mView = view;
             nameTextView = (TextView) view.findViewById(R.id.textview_book_name);
-            authorTextView = (TextView) view.findViewById(R.id.textview_book_author);
             coverImageView = (ImageView) view.findViewById(R.id.imageview_cover_art);
             checkBox = (SmoothCheckBox) view.findViewById(R.id.checkbox_favorite);
         }
