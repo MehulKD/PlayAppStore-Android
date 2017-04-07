@@ -1,6 +1,8 @@
 package com.playappstore.playappstore.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +19,11 @@ import com.playappstore.playappstore.R;
 import com.playappstore.playappstore.view.SmoothCheckBox;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
@@ -28,10 +34,16 @@ public class FindItemGridViewAdapter extends BaseAdapter {
 
     private final ArrayList<FindBean> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private SharedPreferences.Editor edit;
+    private SharedPreferences sp;
+    private final Set<String> bundleIds;
 
-    public FindItemGridViewAdapter(ArrayList<FindBean> items, OnListFragmentInteractionListener listener) {
+    public FindItemGridViewAdapter(ArrayList<FindBean> items, OnListFragmentInteractionListener listener, SharedPreferences sp) {
         mValues = items;
         mListener = listener;
+        this.sp = sp;
+        edit = sp.edit();
+        bundleIds = sp.getStringSet("bundleId", new HashSet<String>());
     }
 
     @Override
@@ -49,7 +61,7 @@ public class FindItemGridViewAdapter extends BaseAdapter {
         return null;
     }
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // view holder pattern
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext())
@@ -64,8 +76,26 @@ public class FindItemGridViewAdapter extends BaseAdapter {
         holder.nameTextView.setText(mValues.get(position).getName());
         Context context = holder.mView.getContext();
 
-        //String url = "https://45.77.13.248:1337/cgi/files/playappstore/a0ab29fe812a0582b6dd355e8dcaac66_icon.png";
         Glide.with(context).load(mValues.get(position).getIcon()).into(holder.coverImageView);
+        if (bundleIds.contains(mValues.get(position).getBundleId())){
+            holder.checkBox.setChecked(true);
+        }else{
+            holder.checkBox.setChecked(false);
+        }
+        holder.checkBox.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SmoothCheckBox checkBox, boolean isChecked) {
+                if (isChecked){
+                    bundleIds.add(mValues.get(position).getBundleId());
+                    edit.putStringSet("bundleId",bundleIds);
+                    edit.commit();
+                }else{
+                    bundleIds.remove(mValues.get(position).getBundleId());
+                    edit.putStringSet("bundleId",bundleIds);
+                    edit.commit();
+                }
+            }
+        });
         return convertView;
     }
 

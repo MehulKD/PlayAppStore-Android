@@ -1,6 +1,7 @@
 package com.playappstore.playappstore.view.Fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +15,17 @@ import com.playappstore.playappstore.content.DummyContent;
 import com.playappstore.playappstore.content.DummyContent.DummyItem;
 import com.playappstore.playappstore.R;
 import com.playappstore.playappstore.adapter.FavouriteItemRecyclerViewAdapter;
+import com.playappstore.playappstore.entity.FindBean;
+import com.playappstore.playappstore.network.RetrofitInit;
+import com.playappstore.playappstore.utils.APIService;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A fragment representing a list of Items.
@@ -28,6 +40,9 @@ public class FavouriteFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private static Call<ArrayList<FindBean>> list;
+    private Set<String> bundleIds;
+    private static APIService gitHubService;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -39,6 +54,8 @@ public class FavouriteFragment extends Fragment {
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static FavouriteFragment newInstance() {
+        gitHubService = RetrofitInit.getInstance();
+
         FavouriteFragment fragment = new FavouriteFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, 1);
@@ -59,6 +76,8 @@ public class FavouriteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite_list, container, false);
+        SharedPreferences sp = getActivity().getSharedPreferences("APP_IDS",Context.MODE_PRIVATE);
+        bundleIds = sp.getStringSet("bundleId", new HashSet<String>());
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
@@ -69,20 +88,15 @@ public class FavouriteFragment extends Fragment {
             }
             recyclerView.setAdapter(new FavouriteItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
+
+        if (bundleIds.size()!=0) {
+            for(String bundleId:bundleIds)
+                getData(bundleId);
+        }
         return view;
     }
 
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnListFragmentInteractionListener");
-        }
-    }
 
     @Override
     public void onDetach() {
@@ -103,5 +117,22 @@ public class FavouriteFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(DummyItem item);
+    }
+
+    private void getData(String bundleId){
+        list = gitHubService.getFavouriteList(bundleId);
+        list.enqueue(new Callback<ArrayList<FindBean>>() {
+            @Override
+            public void onResponse(Call<ArrayList<FindBean>> call, Response<ArrayList<FindBean>> response) {
+                if (response.body()!=null&&response.body().size()!=0){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<FindBean>> call, Throwable t) {
+
+            }
+        });
     }
 }

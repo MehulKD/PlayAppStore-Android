@@ -1,5 +1,7 @@
 package com.playappstore.playappstore.view.Fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -66,9 +68,9 @@ public class FindFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_find_list, container, false);
-
+        SharedPreferences sp = getActivity().getSharedPreferences("APP_IDS",Context.MODE_PRIVATE);
         gridView = (GridView)view.findViewById(R.id.gridview);
-        adpter = new FindItemGridViewAdapter(new ArrayList<FindBean>(), mListener);
+        adpter = new FindItemGridViewAdapter(new ArrayList<FindBean>(), mListener,sp);
         gridView.setAdapter(adpter);
 
 
@@ -87,6 +89,7 @@ public class FindFragment extends Fragment {
         });
         return view;
     }
+
 
 
 
