@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="设置">
+        <EditTextPreference
+            android:key="change_icons"
+            android:title="服务器地址"
+            android:summary="https://192.168.1.1:1337"
+            android:dialogMessage="Dialog Message" />
+        <ListPreference
+            android:defaultValue="popular"
+            android:entries="@array/categories"
+            android:entryValues="@array/categories_value"
+            android:summary="选择语言"
+            android:title="语言"
+            android:key="language_categories_key" />
+        <SwitchPreferenceCompat
+            android:key="push"
+            android:title="推送"/>
+        <Preference
+            android:key="display"
+            android:title="显示设置"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="其他">
+        <Preference
+            android:key="clear_cache"
+            android:title="清除缓存"/>
+        <Preference
+            android:key="share"
+            android:title="分享给朋友"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="关于">
+        <Preference
+            android:key="about"
+            android:title="关于我们"/>
+        <Preference
+            android:key="knowledge"
+            android:title="鸣谢"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

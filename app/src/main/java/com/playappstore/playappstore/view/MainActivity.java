@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment = FavouriteFragment.newInstance();
                         break;
                     case R.id.tab_setting:
-                        selectedFragment = SettingFragment.newInstance();
+                        selectedFragment = (Fragment) SettingFragment.newInstance();
                         break;
                 }
                 if (selectedFragment != null) {

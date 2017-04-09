@@ -1,8 +1,16 @@
 package com.playappstore.playappstore.view.Fragment;
 
+import android.app.Notification;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.Preference;
+import android.preference.PreferenceFragment;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.preference.PreferenceFragmentCompat;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +22,9 @@ import android.view.ViewGroup;
 import com.playappstore.playappstore.content.DummyContent;
 import com.playappstore.playappstore.R;
 import com.playappstore.playappstore.adapter.SettingItemRecyclerViewAdapter;
+import com.playappstore.playappstore.utils.SharedPreferenceUtil;
+
+import java.io.File;
 
 /**
  * A fragment representing a list of Items.
@@ -21,13 +32,22 @@ import com.playappstore.playappstore.adapter.SettingItemRecyclerViewAdapter;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class SettingFragment extends Fragment {
+public class SettingFragment extends PreferenceFragmentCompat
+        implements Preference.OnPreferenceClickListener,
+        Preference.OnPreferenceChangeListener {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+
+    private SharedPreferenceUtil mSharedPreferenceUtil;
+    private Preference mChangeIcons;
+    private Preference mChangeUpdate;
+    private Preference mClearCache;
+    private CheckBoxPreference mNotificationType;
+    private CheckBoxPreference mAnimationOnOff;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -46,33 +66,78 @@ public class SettingFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+////        addPreferencesFromResource(R.xml.settings);
+////        mSharedPreferenceUtil = SharedPreferenceUtil.getInstance();
+////
+////        mChangeIcons = findPreference(SharedPreferenceUtil.CHANGE_ICONS);
+////        mChangeUpdate = findPreference(SharedPreferenceUtil.AUTO_UPDATE);
+////        mClearCache = findPreference(SharedPreferenceUtil.CLEAR_CACHE);
+////
+////        mAnimationOnOff = (CheckBoxPreference) findPreference(SharedPreferenceUtil.ANIM_START);
+////        mNotificationType = (CheckBoxPreference) findPreference(SharedPreferenceUtil.NOTIFICATION_MODEL);
+////
+////        if (SharedPreferenceUtil.getInstance().getNotificationModel() != Notification.FLAG_ONGOING_EVENT) {
+////            mNotificationType.setChecked(false);
+////        } else {
+////            mNotificationType.setChecked(true);
+////        }
+////
+////        mAnimationOnOff.setChecked(SharedPreferenceUtil.getInstance().getMainAnim());
+//
+////        mChangeIcons.setSummary(getResources().getStringArray(R.array.icons)[mSharedPreferenceUtil.getIconType()]);
+//
+////        mChangeUpdate.setSummary(
+////                mSharedPreferenceUtil.getAutoUpdate() == 0 ? "禁止刷新" : "每" + mSharedPreferenceUtil.getAutoUpdate() + "小时更新");
+////        mClearCache.setSummary(FileSizeUtil.getAutoFileOrFilesSize(BaseApplication.getAppCacheDir() + "/NetCache"));
+//
+////        mChangeIcons.setOnPreferenceClickListener(this);
+////        mChangeUpdate.setOnPreferenceClickListener(this);
+////        mClearCache.setOnPreferenceClickListener(this);
+////        mNotificationType.setOnPreferenceChangeListener(this);
+////
+////        mAnimationOnOff.setOnPreferenceChangeListener(this);
+//    }
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+
+    @Override
+    public void onCreatePreferences(Bundle bundle, String s) {
+        //add xml
+        addPreferencesFromResource(R.xml.settings);
+        mSharedPreferenceUtil = SharedPreferenceUtil.getInstance();
+        getActivity()
+
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_setting_item, container, false);
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        if (getArguments() != null) {
+//            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+//        }
+//    }
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new SettingItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-        }
-        return view;
-    }
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        View view = inflater.inflate(R.layout.fragment_setting_item, container, false);
+//
+//        // Set the adapter
+//        if (view instanceof RecyclerView) {
+//            Context context = view.getContext();
+//            RecyclerView recyclerView = (RecyclerView) view;
+//            if (mColumnCount <= 1) {
+//                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+//            } else {
+//                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+//            }
+//            recyclerView.setAdapter(new SettingItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+//        }
+//        return view;
+//    }
 
 
     @Override
@@ -105,5 +170,20 @@ public class SettingFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(DummyContent.DummyItem item);
+    }
+
+
+
+
+
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+
+        return true;
+    }
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+        return true;
     }
 }
