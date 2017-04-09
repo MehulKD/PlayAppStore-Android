@@ -4,11 +4,12 @@ import android.app.Notification;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.CheckBoxPreference;
-import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
@@ -43,7 +44,7 @@ public class SettingFragment extends PreferenceFragmentCompat
     private OnListFragmentInteractionListener mListener;
 
     private SharedPreferenceUtil mSharedPreferenceUtil;
-    private Preference mChangeIcons;
+    private Preference mChangeHost;
     private Preference mChangeUpdate;
     private Preference mClearCache;
     private CheckBoxPreference mNotificationType;
@@ -107,37 +108,12 @@ public class SettingFragment extends PreferenceFragmentCompat
         //add xml
         addPreferencesFromResource(R.xml.settings);
         mSharedPreferenceUtil = SharedPreferenceUtil.getInstance();
-        getActivity()
+        mChangeHost = findPreference(SharedPreferenceUtil.HOST);
+        mChangeHost.setSummary(mSharedPreferenceUtil.getHost());
+        mChangeHost.setOnPreferenceChangeListener(this);
 
     }
 
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//        if (getArguments() != null) {
-//            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-//        }
-//    }
-
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.fragment_setting_item, container, false);
-//
-//        // Set the adapter
-//        if (view instanceof RecyclerView) {
-//            Context context = view.getContext();
-//            RecyclerView recyclerView = (RecyclerView) view;
-//            if (mColumnCount <= 1) {
-//                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-//            } else {
-//                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-//            }
-//            recyclerView.setAdapter(new SettingItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-//        }
-//        return view;
-//    }
 
 
     @Override
@@ -183,6 +159,10 @@ public class SettingFragment extends PreferenceFragmentCompat
     }
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        System.out.println(newValue.toString());
+        if (preference == mChangeHost) {
+            mSharedPreferenceUtil.setHost((String) newValue);
+        }
 
         return true;
     }

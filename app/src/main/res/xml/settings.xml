@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="设置">
         <EditTextPreference
-            android:key="change_icons"
+            android:key="change_host"
             android:title="服务器地址"
             android:summary="https://192.168.1.1:1337"
             android:dialogMessage="Dialog Message" />

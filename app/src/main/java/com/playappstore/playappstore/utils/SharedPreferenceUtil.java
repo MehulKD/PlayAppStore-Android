@@ -12,10 +12,7 @@ import com.playappstore.playappstore.base.BaseApplication;
  */
 
 public class SharedPreferenceUtil {
-    public static final String  HOST = "setting_host"; // host address
-    
-
-    public static int ONE_HOUR = 1000 * 60 * 60;
+    public static final String  HOST = "change_host"; // host address
 
     private SharedPreferences mPrefs;
 
@@ -59,7 +56,7 @@ public class SharedPreferenceUtil {
     }
 
     public void setHost(String host) {
-        mPrefs.edit().putString(HOST, host);
+        mPrefs.edit().putString(HOST, host).apply();
     }
     public String getHost() {
         return mPrefs.getString(HOST, "");
