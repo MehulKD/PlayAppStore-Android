@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
-
 import com.playappstore.playappstore.content.DummyContent;
 import com.playappstore.playappstore.content.DummyContent.DummyItem;
 

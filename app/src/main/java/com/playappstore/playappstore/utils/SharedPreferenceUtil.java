@@ -59,6 +59,6 @@ public class SharedPreferenceUtil {
         mPrefs.edit().putString(HOST, host).apply();
     }
     public String getHost() {
-        return mPrefs.getString(HOST, "");
+        return mPrefs.getString(HOST, "https://45.77.13.248:1337");
     }
 }

@@ -19,6 +19,7 @@ import com.playappstore.playappstore.entity.FindBean;
 import com.playappstore.playappstore.network.RetrofitInit;
 import com.playappstore.playappstore.utils.APIService;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -41,8 +42,10 @@ public class FavouriteFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private static Call<ArrayList<FindBean>> list;
+    private ArrayList<ArrayList<FindBean>> listData = new ArrayList<>();
     private Set<String> bundleIds;
     private static APIService gitHubService;
+    private FavouriteItemRecyclerViewAdapter adapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -78,15 +81,14 @@ public class FavouriteFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorite_list, container, false);
         SharedPreferences sp = getActivity().getSharedPreferences("APP_IDS",Context.MODE_PRIVATE);
         bundleIds = sp.getStringSet("bundleId", new HashSet<String>());
+
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new FavouriteItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            adapter = new FavouriteItemRecyclerViewAdapter(listData, mListener,
+                    LayoutInflater.from(getActivity()),getActivity());
+            recyclerView.setAdapter(adapter);
         }
 
         if (bundleIds.size()!=0) {
@@ -125,7 +127,8 @@ public class FavouriteFragment extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<FindBean>> call, Response<ArrayList<FindBean>> response) {
                 if (response.body()!=null&&response.body().size()!=0){
-
+                    listData.add(response.body());
+                    adapter.notifyDataSetChanged();
                 }
             }
 

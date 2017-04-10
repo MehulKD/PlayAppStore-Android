@@ -44,14 +44,13 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment = FavouriteFragment.newInstance();
                         break;
                     case R.id.tab_setting:
-                        selectedFragment = (Fragment) SettingFragment.newInstance();
+                        selectedFragment =  SettingFragment.newInstance();
                         break;
                 }
                 if (selectedFragment != null) {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.frame_layout, selectedFragment);
                     transaction.commit();
-
                 }
 
                 //return true;
