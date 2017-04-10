@@ -13,7 +13,7 @@ import retrofit2.http.Path;
  */
 
 public interface APIService {
-    String baseUrl = "https://45.77.13.248:1337";
+    String baseUrl = SharedPreferenceUtil.getInstance().getHost();;
 
     @GET("/records/ios")
     Call<ArrayList<FindBean>> getFindList();
